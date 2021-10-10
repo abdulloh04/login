@@ -49,7 +49,7 @@ class Loginpage:
         #
         # password = getpass.getpass("Password: ").lower()
         #
-        # while self.string_empty(password) or self.passlen(password):
+        # while self.string_empty(password) or self.len_(password, 8):
         #     self.clear_and_text("Passworddingiz 8ta belgidan oz!!!")
         #     password = getpass.getpass("Password: ").lower()
         #
@@ -61,13 +61,24 @@ class Loginpage:
         #
         # self.clear()
         #
-        name = input("Ismingizni kirinting: ").capitalize()
+        # name = input("Ismingizni kirinting: ").capitalize()
+        #
+        # while self.string_empty(name.isalpha()):
+        #     self.clear_and_text("Faqat harfdan iborat bo'lsin!")
+        #     name = input("Ismingizni kirinting: ").capitalize()
+        #
+        #
+        # self.clear()
 
-        while self.string_empty(name.isalpha()):
-            self.clear_and_text("Faqat harfdan iborat bo'lsin!")
-            name = input("Ismingizni kirinting: ").capitalize()
+        age = input("Yoshingiz: ")
 
-        
+        while self.string_empty(age.isnumeric()) or not len(age) <= 3:
+            self.clear_and_text("Bizni diyorda yosh raqam bilan yoziladi iltimos raqam kiriting!!")
+            age = input("Yoshingiz: ")
+
+    
+
+
 
 
 
@@ -95,8 +106,8 @@ class Loginpage:
             return True
         return False
 
-    def passlen(self, password):
-        if len(password) >= 8:
+    def len_(self, password, len_: int):
+        if len(password) >= len_:
             return False
         return True
 
