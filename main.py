@@ -153,7 +153,30 @@ class Loginpage:
 
 
         elif tanlash == tanlash_option[2]:
-            print("delete")
+            self.clear()
+            print("Accoutingizni o'chirishi xohlaysizmi? ")
+            tanlash_ = input("y/n: ")
+            tanlash_option_ = ['y', 'n']
+
+            while tanlash_ not in tanlash_option_:
+                self.clear_and_text("Faqatgina y/n kiritsangiz bo'ladi!!! ")
+                tanlash_ = input("y/n: ")
+
+            self.clear()
+            if tanlash_ == tanlash_option_[0]:
+                eski_password = input("Oldingi passwordingizni kiriting: ")
+
+                while not self.loginqism(login, eski_password):
+                    self.clear_and_text("Password noto'g'ri")
+                    eski_password = input("Oldingi passwordingizni kiriting: ").strip().lower()
+
+                self.delacc(login)
+                self.clear()
+                self.tanlash_qismi()
+            else:
+                self.clear()
+                self.tanlash_qismi()
+
         else:
             print("Exit")
 
@@ -221,6 +244,11 @@ class Loginpage:
     def passyangilash(self, new, login):
         mydb = db.cursor()
         mydb.execute(f"update {dbtitle} set password = '{new}' where login = '{login}';")
+        db.commit()
+
+    def delacc(self, login):
+        mydb = db.cursor()
+        mydb.execute(f"delete from {dbtitle} where login = '{login}'")
         db.commit()
 
 
