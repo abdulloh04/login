@@ -9,6 +9,7 @@ db = mysql.connector.connect(
     password = "abdulloh",
     database = "login"
 )
+dbtitle = 'loginpage'
 
 
 class Loginpage:
@@ -38,45 +39,52 @@ class Loginpage:
             self.login()
 
     def registr(self):
-        # self.clear()
-        # login = input("Login: ").lower()
-        #
-        # while self.string_empty(login[0].isalpha()) or self.birxil_login(login):
-        #     self.clear_and_text("Login faqat harf va sondan iborat bo'lsin!!!")
-        #     login = input("Login: ").lower()
-        #
-        # self.clear()
-        #
-        # password = getpass.getpass("Password: ").lower()
-        #
-        # while self.string_empty(password) or self.len_(password, 8):
-        #     self.clear_and_text("Passworddingiz 8ta belgidan oz!!!")
-        #     password = getpass.getpass("Password: ").lower()
-        #
-        # t_password = getpass.getpass("Passwordni takrorlang: ").lower()
-        #
-        # while t_password != password:
-        #     self.clear_and_text("Hozirgi kiritgan passwordingiz birinchisi bilan mos tushmayapti iltimos to'g'ri kiriting!!!")
-        #     t_password = getpass.getpass("Passwordni takrorlang: ").lower()
-        #
-        # self.clear()
-        #
-        # name = input("Ismingizni kirinting: ").capitalize()
-        #
-        # while self.string_empty(name.isalpha()):
-        #     self.clear_and_text("Faqat harfdan iborat bo'lsin!")
-        #     name = input("Ismingizni kirinting: ").capitalize()
-        #
-        #
-        # self.clear()
+        self.clear()
+        login = input("Login: ").lower().strip()
 
-        age = input("Yoshingiz: ")
+        while self.string_empty(login[0].isalpha()):
+            self.clear_and_text("Loginda faqat harf va sondan iborat bo'lsin!!!")
+            login = input("Login: ").lower().strip()
+
+        while self.birxil_login(login):
+            self.clear_and_text("Bunday login mavjud boshqa login kiriting!!!")
+            login = input("Login: ").lower().strip()
+
+        self.clear()
+
+        password = getpass.getpass("Password: ").lower().strip()
+
+        while self.string_empty(password) or self.len_(password, 8):
+            self.clear_and_text("Passworddingiz 8ta belgidan oz!!!")
+            password = getpass.getpass("Password: ").lower().strip()
+
+        t_password = getpass.getpass("Passwordni takrorlang: ").lower().strip()
+
+        while t_password != password:
+            self.clear_and_text("Hozirgi kiritgan passwordingiz birinchisi bilan mos tushmayapti iltimos to'g'ri kiriting!!!")
+            t_password = getpass.getpass("Passwordni takrorlang: ").lower().strip()
+
+        self.clear()
+
+        name = input("Ismingizni kirinting: ").capitalize().strip()
+
+        while self.string_empty(name.isalpha()):
+            self.clear_and_text("Faqat harfdan iborat bo'lsin!")
+            name = input("Ismingizni kirinting: ").capitalize().strip()
+
+
+        self.clear()
+
+        age = input("Yoshingiz: ").strip()
 
         while self.string_empty(age.isnumeric()) or not len(age) <= 3:
-            self.clear_and_text("Bizni diyorda yosh raqam bilan yoziladi iltimos raqam kiriting!!")
-            age = input("Yoshingiz: ")
+            self.clear_and_text("Bosh belgi yoki hajmi uchdan ko'p bo'lgan son kiritmang!")
+            age = input("Yoshingiz: ").strip()
 
-    
+
+        self.db_ulash(login, password, name, age)
+
+
 
 
 
@@ -97,19 +105,27 @@ class Loginpage:
     def string_empty(self, string):
         return not bool(string)
 
-    def birxil_login(self, login):
-        mydb = db.cursor()
-        mydb.execute(f"select * from loginpage where login='{login}';")
-        mydb = mydb.fetchall()
-
-        if mydb:
-            return True
-        return False
-
     def len_(self, password, len_: int):
         if len(password) >= len_:
             return False
         return True
+
+    # Mysql
+
+    def birxil_login(self, login):
+        mydb = db.cursor()
+        mydb.execute(f"select * from loginpage where login='{login}';")
+        mydb1 = mydb.fetchall()
+
+        if mydb1:
+            return True
+        return False
+
+    def db_ulash(self, login, password, name, age):
+        mydb = db.cursor()
+        mydb.execute(f"insert into {dbtitle} (login, password, name, age) values ('{login}', '{password}', '{name}', '{age}');")
+        db.commit()
+
 
 
 
