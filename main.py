@@ -82,7 +82,7 @@ class Loginpage:
             age = input("Yoshingiz: ").strip()
 
 
-        self.db_ulash(login, password, name, age)
+        self.db_ulash(login, password, name, int(age))
 
 
     def login_(self):
@@ -95,9 +95,24 @@ class Loginpage:
             login = input("Login: ").strip().lower()
             password = input("Password: ").strip().lower()
 
+        self.loginni_ichi()
 
 
-    
+    def loginni_ichi(self):
+        self.clear()
+        self.option_4()
+        tanlash = input("[1-4]")
+        tanlash_option = ['1', '2', '3', '4']
+
+        while tanlash not in tanlash_option:
+            self.clear_and_text("Faqat 1 dan 4 gacham raqamni kiriting!!!")
+            tanlash = input("[1-4]: ")
+
+        
+
+
+
+
 
 
     def clear(self):
@@ -114,6 +129,14 @@ class Loginpage:
         if len(password) >= len_:
             return False
         return True
+
+    @staticmethod
+    def option_4():
+        print("""
+        Loginni yangilash               [1]
+        Passwordni yangilash            [2]
+        Accountni o'chirib tashlash     [3]
+        Tizimdan chiqib ketish          [4]""")
 
     # Mysql
 
@@ -147,5 +170,5 @@ class Loginpage:
 
 
 person = Loginpage()
-person.login_()
+person.loginni_ichi()
 
