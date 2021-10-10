@@ -36,7 +36,7 @@ class Loginpage:
         if tanlash == tanlash_option[0]:
             self.registr()
         else:
-            self.login()
+            self.login_()
 
     def registr(self):
         self.clear()
@@ -46,7 +46,7 @@ class Loginpage:
             self.clear_and_text("Loginda faqat harf va sondan iborat bo'lsin!!!")
             login = input("Login: ").lower().strip()
 
-        while self.birxil_login(login):
+        while self.birxil('login', login):
             self.clear_and_text("Bunday login mavjud boshqa login kiriting!!!")
             login = input("Login: ").lower().strip()
 
@@ -85,14 +85,19 @@ class Loginpage:
         self.db_ulash(login, password, name, age)
 
 
+    def login_(self):
+        self.clear()
+        login = input("Login: ").strip().lower()
+        password = input("Password: ").strip().lower()
+
+        while not self.loginqism(login, password):
+            self.clear_and_text("Login yokida password to'g'ri")
+            login = input("Login: ").strip().lower()
+            password = input("Password: ").strip().lower()
 
 
 
-
-
-
-    def login(self):
-        print("Login qism")
+    
 
 
     def clear(self):
@@ -112,9 +117,18 @@ class Loginpage:
 
     # Mysql
 
-    def birxil_login(self, login):
+    def birxil(self, login, t_title):
         mydb = db.cursor()
-        mydb.execute(f"select * from loginpage where login='{login}';")
+        mydb.execute(f"select * from {dbtitle} where {t_title}='{login}';")
+        mydb1 = mydb.fetchall()
+
+        if mydb1:
+            return True
+        return False
+
+    def loginqism(self, login, password):
+        mydb = db.cursor()
+        mydb.execute(f"select * from {dbtitle} where login='{login}' and password='{password}';")
         mydb1 = mydb.fetchall()
 
         if mydb1:
@@ -133,5 +147,5 @@ class Loginpage:
 
 
 person = Loginpage()
-person.registr()
+person.login_()
 
