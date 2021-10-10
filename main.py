@@ -91,24 +91,55 @@ class Loginpage:
         password = input("Password: ").strip().lower()
 
         while not self.loginqism(login, password):
-            self.clear_and_text("Login yokida password to'g'ri")
+            self.clear_and_text("Login yokida password noto'g'ri")
             login = input("Login: ").strip().lower()
             password = input("Password: ").strip().lower()
 
-        self.loginni_ichi()
+        self.loginni_ichi(login, password)
 
 
-    def loginni_ichi(self):
+    def loginni_ichi(self, login, password):
         self.clear()
         self.option_4()
-        tanlash = input("[1-4]")
+        tanlash = input("[1-4]: ")
         tanlash_option = ['1', '2', '3', '4']
 
         while tanlash not in tanlash_option:
             self.clear_and_text("Faqat 1 dan 4 gacham raqamni kiriting!!!")
             tanlash = input("[1-4]: ")
 
-        
+        if tanlash == tanlash_option[0]:
+            print("Logini yangilash qismi!")
+            yangi = input("Yangi login: ").lower().strip()
+
+            while self.string_empty(yangi[0].isalpha()):
+                self.clear_and_text("Loginda faqat harf va sondan iborat bo'lsin!!!")
+                yangi = input("Login: ").lower().strip()
+
+            while self.birxil(yangi, 'login'):
+                self.clear_and_text("Bunday login mavjud boshqa login kiriting!!!")
+                yangi = input("Login: ").lower().strip()
+
+            self.yangilash('login', login, yangi)
+            self.tanlash_qismi()
+
+        elif tanlash == tanlash_option[1]:
+            print("Password yangilash qismi!")
+
+            eski_password = input("Oldingi passwordingizni yozin")
+
+            while not self.loginqism(login, eski_password):
+                self.clear_and_text("Password to'g'ri")
+                eski_password = input("Password: ").strip().lower()
+
+            yangi = input("Yangi password: ").lower().strip()
+
+        elif tanlash == tanlash_option[2]:
+            print("delete")
+        else:
+            print("Exit")
+
+
 
 
 
@@ -163,6 +194,12 @@ class Loginpage:
         mydb.execute(f"insert into {dbtitle} (login, password, name, age) values ('{login}', '{password}', '{name}', '{age}');")
         db.commit()
 
+    def yangilash(self, title, old, new):
+        mydb = db.cursor()
+        mydb.execute(f"update {dbtitle} set {title} = '{new}' where {title} = '{old}';")
+        db.commit()
+
+
 
 
 
@@ -170,5 +207,5 @@ class Loginpage:
 
 
 person = Loginpage()
-person.loginni_ichi()
+person.login_()
 
