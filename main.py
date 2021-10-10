@@ -124,15 +124,33 @@ class Loginpage:
             self.tanlash_qismi()
 
         elif tanlash == tanlash_option[1]:
-            print("Password yangilash qismi!")
-
-            eski_password = input("Oldingi passwordingizni yozin")
+            eski_password = input("Oldingi passwordingizni kiriting: ")
 
             while not self.loginqism(login, eski_password):
-                self.clear_and_text("Password to'g'ri")
-                eski_password = input("Password: ").strip().lower()
+                self.clear_and_text("Password noto'g'ri")
+                eski_password = input("Oldingi passwordingizni kiriting: ").strip().lower()
 
-            yangi = input("Yangi password: ").lower().strip()
+            self.clear()
+            yangi_p = getpass.getpass("Yangi password: ").lower().strip()
+
+            while self.string_empty(yangi_p) or self.len_(yangi_p, 8):
+                self.clear_and_text("Passworddingiz 8ta belgidan oz!!!")
+                yangi_p = getpass.getpass("Password: ").lower().strip()
+
+            t_password = getpass.getpass("Passwordni takrorlang: ").lower().strip()
+
+            while t_password != yangi_p:
+                self.clear_and_text(
+                    "Hozirgi kiritgan passwordingiz birinchisi bilan mos tushmayapti iltimos to'g'ri kiriting!!!")
+                t_password = getpass.getpass("Passwordni takrorlang: ").lower().strip()
+
+            self.clear()
+            self.passyangilash(yangi_p, login)
+            self.tanlash_qismi()
+
+
+
+
 
         elif tanlash == tanlash_option[2]:
             print("delete")
@@ -200,7 +218,10 @@ class Loginpage:
         db.commit()
 
 
-
+    def passyangilash(self, new, login):
+        mydb = db.cursor()
+        mydb.execute(f"update {dbtitle} set password = '{new}' where login = '{login}';")
+        db.commit()
 
 
 
