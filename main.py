@@ -28,7 +28,7 @@ class Loginpage:
         tanlash_option = ['1', '2']
 
         while tanlash not in tanlash_option:
-            self.clear_and_invalid("Faqat 1 va 2 raqamni kiriting!!!")
+            self.clear_and_text("Faqat 1 va 2 raqamni kiriting!!!")
             tanlash = input("[1/2]: ")
 
         if tanlash == tanlash_option[0]:
@@ -37,7 +37,15 @@ class Loginpage:
             self.login()
 
     def registr(self):
-        print("Regist qism")
+        self.clear()
+        login = input("Login: ").lower()
+
+        while self.string_empty(login[0].isalpha()):
+            self.clear_and_text("Login faqat harf va sondan iborat bo'lsin!!!")
+            login = input("Login: ").lower()
+
+
+        
 
     def login(self):
         print("Login qism")
@@ -46,9 +54,12 @@ class Loginpage:
     def clear(self):
         os.system("clear")
 
-    def clear_and_invalid(self, string: str):
+    def clear_and_text(self, string: str):
         self.clear()
         print(f"{string}")
+
+    def string_empty(self, string):
+        return not bool(string)
 
 
 
@@ -57,5 +68,5 @@ class Loginpage:
 
 
 person = Loginpage()
-person.tanlash_qismi()
+person.registr()
 
