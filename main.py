@@ -178,7 +178,28 @@ class Loginpage:
                 self.tanlash_qismi()
 
         else:
-            print("Exit")
+            self.clear()
+            print("Tizimdan chiqip kettasizmi yoki tanlash qismiga qaytasizmi?")
+            tanlash_ = input("Chiqip kettish          [1]"
+                             "Tanlash qismiga o'tish  [2]"
+                             "[1/2]: ")
+            tanlash_option_ = ['1', '2']
+
+            while tanlash_ not in tanlash_option_:
+                self.clear_and_text("Faqatgina 1/2 kiritsangiz bo'ladi!!! ")
+                tanlash_ = input("Chiqip kettish          [1]"
+                                 "Tanlash qismiga o'tish  [2]"
+                                 "[1/2]: ")
+
+            if tanlash_ == tanlash_option_[0]:
+                self.clear()
+                print("Tizimdan muvaffaqitli chiqip kettingiz")
+                exit()
+            else:
+                self.clear()
+                self.tanlash_qismi()
+
+
 
 
 
