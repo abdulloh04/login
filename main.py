@@ -38,28 +38,38 @@ class Loginpage:
             self.login()
 
     def registr(self):
-        self.clear()
-        login = input("Login: ").lower()
+        # self.clear()
+        # login = input("Login: ").lower()
+        #
+        # while self.string_empty(login[0].isalpha()) or self.birxil_login(login):
+        #     self.clear_and_text("Login faqat harf va sondan iborat bo'lsin!!!")
+        #     login = input("Login: ").lower()
+        #
+        # self.clear()
+        #
+        # password = getpass.getpass("Password: ").lower()
+        #
+        # while self.string_empty(password) or self.passlen(password):
+        #     self.clear_and_text("Passworddingiz 8ta belgidan oz!!!")
+        #     password = getpass.getpass("Password: ").lower()
+        #
+        # t_password = getpass.getpass("Passwordni takrorlang: ").lower()
+        #
+        # while t_password != password:
+        #     self.clear_and_text("Hozirgi kiritgan passwordingiz birinchisi bilan mos tushmayapti iltimos to'g'ri kiriting!!!")
+        #     t_password = getpass.getpass("Passwordni takrorlang: ").lower()
+        #
+        # self.clear()
+        #
+        name = input("Ismingizni kirinting: ").capitalize()
 
-        while self.string_empty(login[0].isalpha()) or self.birxil_login(login):
-            self.clear_and_text("Login faqat harf va sondan iborat bo'lsin!!!")
-            login = input("Login: ").lower()
-
-        self.clear()
-
-        password = getpass.getpass("Password: ").lower()
-
-        while self.string_empty(password) or self.passlen(password):
-            self.clear_and_text("Passworddingiz 8ta belgidan oz!!!")
-            password = getpass.getpass("Password: ").lower()
-
-        t_password = getpass.getpass("Passwordni takrorlang: ").lower()
-
-        while t_password != password:
-            self.clear_and_text("Hozirgi kiritgan passwordingiz birinchisi bilan mos tushmayapti iltimos to'g'ri kiriting!!!")
-            t_password = getpass.getpass("Passwordni takrorlang: ").lower()
+        while self.string_empty(name.isalpha()):
+            self.clear_and_text("Faqat harfdan iborat bo'lsin!")
+            name = input("Ismingizni kirinting: ").capitalize()
 
         
+
+
 
 
     def login(self):
