@@ -46,7 +46,7 @@ class Loginpage:
             self.clear_and_text("Loginda faqat harf va sondan iborat bo'lsin!!!")
             login = input("Login: ").lower().strip()
 
-        while self.birxil('login', login):
+        while self.birxil(login, "login"):
             self.clear_and_text("Bunday login mavjud boshqa login kiriting!!!")
             login = input("Login: ").lower().strip()
 
@@ -83,7 +83,8 @@ class Loginpage:
 
 
         self.db_ulash(login, password, name, int(age))
-
+        self.clear()
+        self.loginni_ichi(login, password)
 
     def login_(self):
         self.clear()
@@ -109,6 +110,7 @@ class Loginpage:
             tanlash = input("[1-4]: ")
 
         if tanlash == tanlash_option[0]:
+            self.clear()
             print("Logini yangilash qismi!")
             yangi = input("Yangi login: ").lower().strip()
 
@@ -124,6 +126,7 @@ class Loginpage:
             self.tanlash_qismi()
 
         elif tanlash == tanlash_option[1]:
+            self.clear()
             eski_password = input("Oldingi passwordingizni kiriting: ")
 
             while not self.loginqism(login, eski_password):
@@ -277,5 +280,5 @@ class Loginpage:
 
 
 person = Loginpage()
-person.login_()
+person.tanlash_qismi()
 
